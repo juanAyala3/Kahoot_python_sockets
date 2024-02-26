@@ -4,6 +4,7 @@ from tkinter import StringVar, Toplevel
 from tkinter import ttk
 import threading
 from tkinter import simpledialog
+import ast
 
 """
     ProyEsp1 juego_multijugador
@@ -17,11 +18,10 @@ from tkinter import simpledialog
  """
 
 
-
 root = tk.Tk()
-root.title("Kahoot | Juan Ayala - Gaspar Cardós")
+#root.title("Kahoot | Juan Ayala - Gaspar Cardós")
 font_style = ("Lucida Console", 20)
-root.geometry('550x400')
+root.geometry('550x700')
 
 frame = tk.Frame(root, padx=10, pady=10, bg='#fff')
 question_label = tk.Label(frame, text="Ingrese un nombre de usuario...", height=5, width=35, bg='grey', fg="#fff",
@@ -78,9 +78,27 @@ option4.grid(sticky='W', row=4, column=0)
 
 progress_bar.grid(row=5, column=0, pady=10)
 
+# Tabla Treeview
+tree = ttk.Treeview(root, columns=('Jugador', 'Puntaje'), show='headings')
+tree.heading('Jugador', text='Jugador')
+tree.heading('Puntaje', text='Puntaje')
+#tree.pack(fill="both", expand=True)
+tree.pack(fill="x", expand=False)
+
+
+
+def actualizar_tabla():
+    tree.delete(*tree.get_children())  # Limpiar la tabla
+    for player, score in puntajes.items():
+        tree.insert('', 'end', values=(player, score))
+    # Programar la próxima actualización después de 5 segundos
+    root.after(2000, actualizar_tabla)
+        
+
 index = 0
 correct = 0
 time_left = 15  # Ajustar el tiempo límite a 15 segundos
+
 
 response= None
 
@@ -108,7 +126,11 @@ client_socket.connect((SERVER_HOST, SERVER_PORT))
 #nombre = input("Ingrese su nombre: ")
 
 nombre = simpledialog.askstring("Ingresar nombre", "Por favor, ingresa tu nombre:")
+root.title("Jugador: " + nombre)
 client_socket.send(nombre.encode())
+
+puntajes={}
+actualizar_tabla()  # Actualizar la tabla inicialmente
 
 try:
     j=0
@@ -177,6 +199,11 @@ try:
             client_socket.send(response.encode())
         
         
+        puntaje_actual=client_socket.recv(1024).decode()
+        diccionario = ast.literal_eval(puntaje_actual)
+        puntajes.update(diccionario)
+        #print(puntajes)
+        client_socket.send("ola".encode())
         #print(question_data)
         response=None
         j+=1

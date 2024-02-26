@@ -67,6 +67,11 @@ def handle_client(client_socket):
         # Envía una señal de finalización al cliente
            # print(jugadores.keys())
             #print(jugadores.values()
+            
+            #se envian los puntajes y nombres de los jugadores al cliente
+            client_socket.send(str(jugadores).encode())
+            client_socket.recv(1024).decode()
+            
         client_socket.send("FIN".encode())
         
         
@@ -124,7 +129,7 @@ def actualizar_tabla():
 
 
 root = tk.Tk()
-root.title("Puntajes jugadores")
+root.title("Ranking servidor")
 
 tree = ttk.Treeview(root, columns=('Jugador', 'Puntaje'), show='headings')
 tree.heading('Jugador', text='Jugador')
