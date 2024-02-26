@@ -162,7 +162,7 @@ try:
         
         # Si se agota el tiempo, marcar como incorrecta y pasar a la siguiente pregunta
         if response is None and time_left == 0 and j<=9 :
-            response="5"
+            response="6"
             client_socket.send(response.encode())
         
         
