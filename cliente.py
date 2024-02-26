@@ -19,12 +19,12 @@ from tkinter import simpledialog
 
 
 root = tk.Tk()
-root.title("Kahoot Juan Ayala - Gaspar Cardós")
+root.title("Kahoot | Juan Ayala - Gaspar Cardós")
 font_style = ("Lucida Console", 20)
-root.geometry('550x500')
+root.geometry('550x400')
 
 frame = tk.Frame(root, padx=10, pady=10, bg='#fff')
-question_label = tk.Label(frame, height=5, width=35, bg='grey', fg="#fff",
+question_label = tk.Label(frame, text="Ingrese un nombre de usuario...", height=5, width=35, bg='grey', fg="#fff",
                           font=font_style, wraplength=500)
 
 v1 = StringVar(frame)
