@@ -5,9 +5,21 @@ from tkinter import ttk
 import threading
 from tkinter import simpledialog
 
+"""
+    ProyEsp1 juego_multijugador
+    
+                Juan Enrique Ayala Gaspar
+                Gaspar Alonso Cardós Uc
+
+    Juego de preguntas y respuestas multijugador utilizando sockets con conexión TCP 
+    e hilos para manejar las conexiones de los clientes.
+    El servidor envia las preguntas y cada jugador tiene 15 segundos para responder.
+ """
+
 
 
 root = tk.Tk()
+root.title("Kahoot Juan Ayala - Gaspar Cardós")
 root.geometry('500x500')
 
 frame = tk.Frame(root, padx=10, pady=10, bg='#fff')
@@ -76,8 +88,6 @@ def handle_user_input():
     global response
     response = input("Ingrese el número de la respuesta: ")
 
-
-    
 
 # Función para desactivar los botones de opción
 def disableButtons(state):

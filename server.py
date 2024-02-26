@@ -1,5 +1,19 @@
 import socket
 import threading
+import tkinter as tk
+from tkinter import ttk
+
+"""
+    ProyEsp1 juego_multijugador
+    
+                Juan Enrique Ayala Gaspar
+                Gaspar Alonso Cardós Uc
+
+    Juego de preguntas y respuestas multijugador utilizando sockets con conexión TCP 
+    e hilos para manejar las conexiones de los clientes.
+    El servidor envia las preguntas y cada jugador tiene 15 segundos para responder.
+"""
+
 
 # Lista de preguntas sobre países y capitales más difíciles
 questions = [
@@ -32,6 +46,7 @@ options = [
 
 # Función para manejar la conexión con un cliente
 def handle_client(client_socket):
+    global jugadores
     correct_answers=0
     nombre_local=nombre
     try:
@@ -47,7 +62,11 @@ def handle_client(client_socket):
             # Verifica si la respuesta es correcta
             if options[i][int_response] == options[i][4]:
                 correct_answers += 1
+                jugadores[nombre_local]=correct_answers
+                #print(jugadores[nombre_local])
         # Envía una señal de finalización al cliente
+           # print(jugadores.keys())
+            #print(jugadores.values()
         client_socket.send("FIN".encode())
         
         
@@ -57,6 +76,22 @@ def handle_client(client_socket):
         client_socket.recv(1024).decode().strip()
         client_socket.send(str(correct_answers).encode())
         client_socket.close()
+
+#hilo para ir esperando conecciones entrantes de clientes
+def acepta_cliente():
+    global nombre
+    indice=0
+    while True:
+        client_socket, client_addr = server_socket.accept()
+        print(f"[*] Conexión aceptada de {client_addr[0]}:{client_addr[1]}")
+        nombre=client_socket.recv(1024).decode()
+        jugadores[nombre]=0
+        print(f"[*] Nombre de los jugadores: {jugadores.keys()}")
+        indice+=1
+        # Inicia un nuevo hilo para manejar la conexión con el cliente
+        client_handler = threading.Thread(target=handle_client, args=(client_socket,))
+        client_handler.start()
+
 
 # Configuración del servidor
 
@@ -70,23 +105,33 @@ server_socket.bind((SERVER_HOST, SERVER_PORT))
 #se aceptaran 5 conexiones y si hay mas las pondra en espera
 server_socket.listen(5)
 
-jugadores=[]
+jugadores={}
 
 print(f"[*] Servidor escuchando en {SERVER_HOST}:{SERVER_PORT}")
 
-# Espera conexiones entrantes de clientes
-indice=0
-while True:
-    client_socket, client_addr = server_socket.accept()
-    print(f"[*] Conexión aceptada de {client_addr[0]}:{client_addr[1]}")
-    nombre=client_socket.recv(1024).decode()
-    jugador={nombre : 0}
-    jugadores.append(jugador)
-    
-    
-    print(f"[*] Nombre de los jugadores: {jugadores[indice].keys()}")
-    indice+=1
+nombre=""
 
-    # Inicia un nuevo hilo para manejar la conexión con el cliente
-    client_handler = threading.Thread(target=handle_client, args=(client_socket,))
-    client_handler.start()
+acepta_handler = threading.Thread(target=acepta_cliente)
+acepta_handler.start()
+
+
+def actualizar_tabla():
+    tree.delete(*tree.get_children())  # Limpiar la tabla
+    for player, score in jugadores.items():
+        tree.insert('', 'end', values=(player, score))
+    # Programar la próxima actualización después de 5 segundos
+    root.after(5000, actualizar_tabla)
+
+
+root = tk.Tk()
+root.title("Puntajes jugadores")
+
+
+tree = ttk.Treeview(root, columns=('Jugador', 'Puntaje'), show='headings')
+tree.heading('Jugador', text='Jugador')
+tree.heading('Puntaje', text='Puntaje')
+tree.pack()
+
+actualizar_tabla()  # Actualizar la tabla inicialmente
+
+root.mainloop()
