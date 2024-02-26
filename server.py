@@ -126,7 +126,6 @@ def actualizar_tabla():
 root = tk.Tk()
 root.title("Puntajes jugadores")
 
-
 tree = ttk.Treeview(root, columns=('Jugador', 'Puntaje'), show='headings')
 tree.heading('Jugador', text='Jugador')
 tree.heading('Puntaje', text='Puntaje')

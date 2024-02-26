@@ -20,11 +20,12 @@ from tkinter import simpledialog
 
 root = tk.Tk()
 root.title("Kahoot Juan Ayala - Gaspar Cardós")
-root.geometry('500x500')
+font_style = ("Lucida Console", 20)
+root.geometry('550x500')
 
 frame = tk.Frame(root, padx=10, pady=10, bg='#fff')
-question_label = tk.Label(frame, height=5, width=28, bg='grey', fg="#fff",
-                          font=('Verdana', 20), wraplength=500)
+question_label = tk.Label(frame, height=5, width=35, bg='grey', fg="#fff",
+                          font=font_style, wraplength=500)
 
 v1 = StringVar(frame)
 v2 = StringVar(frame)
@@ -32,10 +33,10 @@ v3 = StringVar(frame)
 v4 = StringVar(frame)
 
 
-option1 = tk.Radiobutton(frame, bg="#fff", variable=v1, font=('Verdana', 20), command=lambda: send_option1())
-option2 = tk.Radiobutton(frame, bg="#fff", variable=v2, font=('Verdana', 20), command=lambda: send_option2())
-option3 = tk.Radiobutton(frame, bg="#fff", variable=v3, font=('Verdana', 20), command=lambda: send_option3())
-option4 = tk.Radiobutton(frame, bg="#fff", variable=v4, font=('Verdana', 20), command=lambda: send_option4())
+option1 = tk.Radiobutton(frame, bg="#fff", variable=v1, font=font_style, command=lambda: send_option1())
+option2 = tk.Radiobutton(frame, bg="#fff", variable=v2, font=font_style, command=lambda: send_option2())
+option3 = tk.Radiobutton(frame, bg="#fff", variable=v3, font=font_style, command=lambda: send_option3())
+option4 = tk.Radiobutton(frame, bg="#fff", variable=v4, font=font_style, command=lambda: send_option4())
 
 # Funciones para enviar opciones específicas cuando se hace clic en los botones
 def send_option1():
