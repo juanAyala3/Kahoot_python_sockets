@@ -29,11 +29,10 @@ options = [
     ['Mérida', 'Múnich', 'Berlín', 'Fráncfort del Meno', 'Berlín', '']  # Respuesta: Berlín
 ]
 
-#correct_answers = 0
 
 # Función para manejar la conexión con un cliente
 def handle_client(client_socket):
-    correct_answers = 0
+    correct_answers=0
     nombre_local=nombre
     try:
         for i in range(len(questions)):
@@ -44,14 +43,13 @@ def handle_client(client_socket):
             # Espera la respuesta del cliente
             response = client_socket.recv(1024).decode().strip()
             int_response = int(response) - 1
-            print(f"Nombre del jugador: {nombre_local}, Respuesta del cliente: {options[i][int_response]}")
-
+            print(f"Respuesta del cliente : {response}")
             # Verifica si la respuesta es correcta
             if options[i][int_response] == options[i][4]:
                 correct_answers += 1
-                juagdor[nombre_local]=correct_answers
         # Envía una señal de finalización al cliente
         client_socket.send("FIN".encode())
+        
         
 
     finally:
@@ -72,25 +70,23 @@ server_socket.bind((SERVER_HOST, SERVER_PORT))
 #se aceptaran 5 conexiones y si hay mas las pondra en espera
 server_socket.listen(5)
 
+jugadores=[]
+
 print(f"[*] Servidor escuchando en {SERVER_HOST}:{SERVER_PORT}")
 
-#lista para los nombres y puntuaciones de cada jugador
-jugadores=[]
-global jugador
 # Espera conexiones entrantes de clientes
-
-iteracion=0
+indice=0
 while True:
     client_socket, client_addr = server_socket.accept()
     print(f"[*] Conexión aceptada de {client_addr[0]}:{client_addr[1]}")
     nombre=client_socket.recv(1024).decode()
-    
-    jugador={nombre:0}
+    jugador={nombre : 0}
     jugadores.append(jugador)
     
-    print(f"[*] Nombre del jugador: {jugadores[iteracion].keys()}")
+    
+    print(f"[*] Nombre de los jugadores: {jugadores[indice].keys()}")
+    indice+=1
 
     # Inicia un nuevo hilo para manejar la conexión con el cliente
     client_handler = threading.Thread(target=handle_client, args=(client_socket,))
     client_handler.start()
-    iteracion+=1
