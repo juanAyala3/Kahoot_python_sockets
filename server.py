@@ -120,7 +120,7 @@ def actualizar_tabla():
     for player, score in jugadores.items():
         tree.insert('', 'end', values=(player, score))
     # Programar la próxima actualización después de 5 segundos
-    root.after(5000, actualizar_tabla)
+    root.after(2000, actualizar_tabla)
 
 
 root = tk.Tk()

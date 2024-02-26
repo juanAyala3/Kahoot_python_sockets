@@ -181,12 +181,6 @@ try:
         response=None
         j+=1
 
-            
-        
-
-    
-  
-
     # Recibe el número de respuestas correctas del servidor
     correct_answers = client_socket.recv(1024).decode()
     print(f"¡Juego terminado! Has acertado {correct_answers} preguntas.")
