@@ -21,7 +21,7 @@ import ast
 root = tk.Tk()
 #root.title("Kahoot | Juan Ayala - Gaspar Cardós")
 font_style = ("Lucida Console", 20)
-root.geometry('550x700')
+root.geometry('550x600')
 
 frame = tk.Frame(root, padx=10, pady=10, bg='#fff')
 question_label = tk.Label(frame, text="Ingrese un nombre de usuario...", height=5, width=35, bg='grey', fg="#fff",
