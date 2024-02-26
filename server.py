@@ -39,7 +39,7 @@ options = [
     ['Canberra', 'Wellington', 'Sídney', 'Melbourne', 'Canberra', ''],  # Respuesta: Canberra
     ['San Petersburgo','CDMX', 'Moscú', 'Novosibirsk', 'Moscú', ''],  # Respuesta: Moscú
     ['Shanghái', 'Bogotá', 'Pekín', 'Hong Kong', 'Pekín', ''],  # Respuesta: Pekín
-    ['Madrid', 'Barcelona', 'Valencia', 'Valencia', 'Madrid', ''],  # Respuesta: Madrid
+    ['Madrid', 'Barcelona', 'Valencia', 'Bilbao', 'Madrid', ''],  # Respuesta: Madrid
     ['Mérida', 'Múnich', 'Berlín', 'Fráncfort del Meno', 'Berlín', '']  # Respuesta: Berlín
 ]
 
