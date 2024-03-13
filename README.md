@@ -1,10 +1,5 @@
 # Implementación de Juego Multijugador de Preguntas y Respuestas con Tkinter y Sockets TCP
 
-#Juan Enrique Ayala Gaspar
-#Gaspar Alonso Cardós Uc
-
-#Sistemas Distribuidos  LCC
-
 ## Diseño e Implementación:
 
 ### Objetivo:
